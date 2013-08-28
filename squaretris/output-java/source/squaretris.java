@@ -35,9 +35,6 @@ public void setup(){
 
     // draw starting piece
     addPiece();
-    
-    // start the game!
-    thread("update"); // start the physics / update thread
 }
 
 public void draw(){
@@ -59,7 +56,7 @@ public void draw(){
  * separating the draw loop from 'game-time'
  */
 public void update(){
-    while (game_state != STATE_GAME_OVER) {
+    while (game_state == STATE_GAME) {
 	// sleep game tick (based on level)
 	try{
 	    Thread.sleep(1000/p1.level);
@@ -884,6 +881,8 @@ public void inputMainMenu(){
     case 'g':
 	switch(menu_selection){
 	case 0:
+	    // start the game!
+	    thread("update"); // start the physics / update thread
 	    setGameState(STATE_GAME);
 	    break;
 	case 1:

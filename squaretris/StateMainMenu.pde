@@ -110,6 +110,8 @@ void inputMainMenu(){
     case 'g':
 	switch(menu_selection){
 	case 0:
+	    // start the game!
+	    thread("update"); // start the physics / update thread
 	    setGameState(STATE_GAME);
 	    break;
 	case 1:
