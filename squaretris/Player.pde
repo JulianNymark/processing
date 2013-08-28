@@ -14,7 +14,7 @@ class Player{
     PGraphics next_panel; // next piece
 
     Player(){
-	level = 0;
+	level = 1;
 	lines = 0;
 	score = 0;
 	

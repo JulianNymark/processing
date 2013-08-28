@@ -46,7 +46,7 @@ void update(){
     while (game_state != STATE_GAME_OVER) {
 	// sleep game tick (based on level)
 	try{
-	    Thread.sleep(1000/(p1.level + 1));
+	    Thread.sleep(1000/p1.level);
 	}
 	catch (Exception e){
 	    System.out.println(e.toString());
@@ -210,7 +210,7 @@ void scoreCalc(int lines_done){
 	// lines & score ++
 	p1.score += (lines_done * lines_done);
 	p1.lines += lines_done;
-	if (p1.lines > p1.level*10 + 10) {
+	if (p1.lines > p1.level*10) {
 	    p1.level += 1;
 	}
     }

@@ -1,5 +1,10 @@
 PGraphics score_summary;
 
+// Hunt for the magic bug #1:
+// why does the normal variable p1.score randomly change
+// after the game ends? :D who knows...?
+// great honor will be bestowed on the finder
+
 void initGameOver(){
     
 }
@@ -103,7 +108,7 @@ void draw_summary(){
     score_summary.text("LEVEL MULTIPLIER: x" + p1.level, 0, 40);
     score_summary.stroke(255);
     score_summary.line(0,80,(SCREEN_W/3)-SPACING,80);
-    score_summary.text("FINAL SCORE: " + p1.score*p1.level, 0, 90);
+    score_summary.text("FINAL SCORE: " + p1.score*(p1.level), 0, 90);
     score_summary.textAlign(RIGHT, BOTTOM);
     score_summary.text("press green to exit!", SCREEN_W/2, SCREEN_H/2);
     score_summary.endDraw();

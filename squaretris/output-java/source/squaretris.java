@@ -62,7 +62,7 @@ public void update(){
     while (game_state != STATE_GAME_OVER) {
 	// sleep game tick (based on level)
 	try{
-	    Thread.sleep(1000/(p1.level + 1));
+	    Thread.sleep(1000/p1.level);
 	}
 	catch (Exception e){
 	    System.out.println(e.toString());
@@ -226,7 +226,7 @@ public void scoreCalc(int lines_done){
 	// lines & score ++
 	p1.score += (lines_done * lines_done);
 	p1.lines += lines_done;
-	if (p1.lines > p1.level*10 + 10) {
+	if (p1.lines > p1.level*10) {
 	    p1.level += 1;
 	}
     }
@@ -500,7 +500,7 @@ class Player{
     PGraphics next_panel; // next piece
 
     Player(){
-	level = 0;
+	level = 1;
 	lines = 0;
 	score = 0;
 	
@@ -664,6 +664,10 @@ public void inputGame(){
 }
 PGraphics score_summary;
 
+// Quiz:
+// why does the normal variable p1.score randomly change
+// after game ends? :D who knows...?
+
 public void initGameOver(){
     
 }
@@ -767,7 +771,7 @@ public void draw_summary(){
     score_summary.text("LEVEL MULTIPLIER: x" + p1.level, 0, 40);
     score_summary.stroke(255);
     score_summary.line(0,80,(SCREEN_W/3)-SPACING,80);
-    score_summary.text("FINAL SCORE: " + p1.score*p1.level, 0, 90);
+    score_summary.text("FINAL SCORE: " + p1.score*(p1.level), 0, 90);
     score_summary.textAlign(RIGHT, BOTTOM);
     score_summary.text("press green to exit!", SCREEN_W/2, SCREEN_H/2);
     score_summary.endDraw();
