@@ -4,13 +4,14 @@ Player p1;
 Player p2;
 
 int game_state; // 0 = main_menu, 1 = game, 2 = game_over
+boolean init_state; // set when changing state!
 
 void setup(){
     size(SCREEN_W,SCREEN_H);
   
     game_grid = new GameGrid();
     
-    game_state = 0;
+    setGameState(STATE_MAIN_MENU);
 
     // init players
     p1 = new Player();
@@ -24,28 +25,25 @@ void setup(){
 }
 
 void draw(){
-    // clear screen
-    background(100);
-  
-    // draw grid
-    game_grid.draw(); // draw grid -> grid's buffer
-    image(game_grid.pg, SPACING, SPACING); // draw grid's buffer
-    
-    // DEBUG FPS counter
-    text("FPS: " + int(frameRate), 10, 20);
-
-    // draw player 1 info panel
-    p1.draw_panel();
-    image(p1.panel, P1_PANEL_X, P1_PANEL_Y);
+    switch (game_state) {
+    case 0: // MAIN_MENU
+	drawMainMenu();
+	break;
+    case 1: // GAME
+	drawGame();
+	break;
+    case 2: // GAME_OVER
+	drawGameOver();
+	break;
+    }
 }
-
 
 /* Infinite update loop for the game. 
  * this thread runs concurrently with that other infinite loop, draw()
  * separating the draw loop from 'game-time'
  */
 void update(){
-    while (true) {
+    while (game_state != STATE_GAME_OVER) {
 	// sleep game tick (based on level)
 	try{
 	    Thread.sleep(1000/(p1.level + 1));
@@ -102,25 +100,25 @@ void rotatePiece(char dir){
     
     switch (dir) {
     case 'l': // counter_clockwise
-	p1.next.rot = (p1.next.rot + 1) % p1.next.max_rot;
+	p1.cur.rot = (p1.cur.rot + 1) % p1.cur.max_rot;
 	if (checkCollision()) {
-	    if (p1.next.rot == 0){
-		p1.next.rot = p1.next.max_rot - 1;
+	    if (p1.cur.rot == 0){
+		p1.cur.rot = p1.cur.max_rot - 1;
 	    }
 	    else {
-		p1.next.rot = p1.next.rot - 1;
+		p1.cur.rot = p1.cur.rot - 1;
 	    }
 	}
 	break;
     case 'r': // clockwise
-	if (p1.next.rot == 0){
-	    p1.next.rot = p1.next.max_rot - 1;
+	if (p1.cur.rot == 0){
+	    p1.cur.rot = p1.cur.max_rot - 1;
 	}
 	else {
-	    p1.next.rot = p1.next.rot - 1;
+	    p1.cur.rot = p1.cur.rot - 1;
 	}
 	if (checkCollision()){
-	    p1.next.rot = (p1.next.rot + 1) % p1.next.max_rot;
+	    p1.cur.rot = (p1.cur.rot + 1) % p1.cur.max_rot;
 	}
 	break;
     }
@@ -130,7 +128,7 @@ void rotatePiece(char dir){
 void addPiece(){
     for (int x=0; x<4; ++x) {
 	for (int y=0; y<4; ++y) {
-	    int block = p1.next.data[p1.next.rot][x][y];
+	    int block = p1.cur.data[p1.cur.rot][x][y];
 	    if ( block > 0) {
 		game_grid.grid[p1.piece_x + x][p1.piece_y + y] = block;
 	    }
@@ -141,7 +139,7 @@ void addPiece(){
 void removePiece(){
     for (int x=0; x<4; ++x) {
 	for (int y=0; y<4; ++y) {
-	    int block = p1.next.data[p1.next.rot][x][y];
+	    int block = p1.cur.data[p1.cur.rot][x][y];
 	    if ( block > 0) {
 		game_grid.grid[p1.piece_x + x][p1.piece_y + y] = 0;
 	    }
@@ -150,50 +148,15 @@ void removePiece(){
 }
 
 void gameOver(){
-    game_state = 2;
+    setGameState(STATE_GAME_OVER);
     
-    PGraphics score_summary = createGraphics(SCREEN_W/2, SCREEN_H/2);
-    
-    score_summary.beginDraw();
-    score_summary.fill(0);
-    score_summary.rect(0,0,SCREEN_W/2, SCREEN_H/2);
-
-    score_summary.fill(255);
-    score_summary.textSize(30);
-    score_summary.textAlign(LEFT, TOP);
-    score_summary.text("SCORE: " + p1.score, 0, 0);
-    score_summary.text("LEVEL MULTIPLIER: x" + p1.level, 0, 40);
-    score_summary.stroke(255);
-    score_summary.line(0,80,(SCREEN_W/3)-SPACING,80);
-    score_summary.text("FINAL SCORE: " + p1.score*p1.level, 0, 90);
-    score_summary.textAlign(RIGHT, BOTTOM);
-    score_summary.text("press green to exit!", SCREEN_W/2, SCREEN_H/2);
-    score_summary.endDraw();
-    
-    // submit highscore? TODO
-    
-    while(true){
-	// print random junk
-	for (int x=0; x<GRID_W; ++x){
-	    for (int y=0; y<GRID_H; ++y){
-		game_grid.grid[x][y] = (int) random(9);
-	    }
-	}
-	
-	// print game over
-	textAlign(CENTER);
-	textSize(SCREEN_H/10);
-	text("GAME OVER", random(SCREEN_W), random(SCREEN_H));
-	
-	// score summary box
-	image(score_summary, SCREEN_W/4, SCREEN_H/4);
-    }
+    // TODO submit highscore??
 }
 
 boolean checkCollision(){
     for (int x=0; x<4; ++x) {
 	for (int y=0; y<4; ++y) {
-	    int block = p1.next.data[p1.next.rot][x][y];
+	    int block = p1.cur.data[p1.cur.rot][x][y];
 	    if ( block > 0) {
 		if (p1.piece_y + y > (GRID_H-1) ||
 		    p1.piece_x + x > (GRID_W-1) ||
@@ -220,6 +183,7 @@ void landedPiece(){
 	for (int x=0; x<GRID_W; ++x) {
 	    if(game_grid.grid[x][y] == 0){
 		full_line = false;
+		break;
 	    }
 	}
 	if (full_line) {
@@ -230,18 +194,26 @@ void landedPiece(){
 			game_grid.grid[x][y2-1];
 		}
 	    }
-	    lines_done +=1;
+	    lines_done += 1;
 	}
     }
     
-    // lines & score ++
-    p1.score += (lines_done * lines_done);
-    p1.lines += lines_done;
-    if (p1.lines > p1.level*10 + 10) {
-	p1.level += 1;
-    }
+    // score calculation
+    scoreCalc(lines_done);
     
+    // get new piece
     newPiece();
+}
+
+void scoreCalc(int lines_done){
+    if (lines_done > 0) {
+	// lines & score ++
+	p1.score += (lines_done * lines_done);
+	p1.lines += lines_done;
+	if (p1.lines > p1.level*10 + 10) {
+	    p1.level += 1;
+	}
+    }
 }
 
 void dropPiece(){
@@ -266,7 +238,56 @@ void newPiece(){
     // if collide on new piece = game over
     if (checkCollision()){
 	gameOver();
+	return;
     }
     
     addPiece(); // draw new piece
+}
+
+void setGameState(int i){
+    init_state = true;
+    game_state = i;
+}
+
+// draw a given shape at given coordinates
+void drawPiece(Piece p, int loc_x, int loc_y){
+    for (int y=0; y<4; ++y){
+	for (int x=0; x<4; ++x){
+	    int block = p.data[p.rot][x][y];
+	    if (block > 0){
+		setFillBlock(block);
+		rect(loc_x+(x*GRID_SIZE), loc_y+(y*GRID_SIZE), 
+		     GRID_SIZE, GRID_SIZE);
+	    }
+	}
+    }
+}
+
+void setFillBlock(int color_int){
+    switch (color_int){
+    case 0:
+	noFill();
+	break;
+    case 1:
+	fill(CYAN);
+	break;
+    case 2:
+	fill(YELLOW);
+	break;
+    case 3:
+	fill(PURPLE);
+	break;
+    case 4:
+	fill(GREEN);
+	break;
+    case 5:
+	fill(RED);
+	break;
+    case 6:
+	fill(BLUE);
+	break;
+    case 7:
+	fill(ORANGE);
+	break;
+    }
 }

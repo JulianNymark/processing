@@ -11,6 +11,7 @@ class Piece {
 			      { 0, 2, 2, 0 },
 			      { 0, 0, 0, 0 } } };
 	    data = o;
+	    rot = 0;
 	    max_rot = 1;
 	    break;
 	case 'i':
@@ -23,6 +24,7 @@ class Piece {
 			      { 0, 0, 1, 0 },
 			      { 0, 0, 1, 0 } } };
 	    data = i;
+	    rot = 1;
 	    max_rot = 2;
 	    break;
 	case 's':
@@ -35,6 +37,7 @@ class Piece {
 			      { 0, 0, 0, 4 },
 			      { 0, 0, 0, 0 } } };
 	    data = s;
+	    rot = 1;
 	    max_rot = 2;
 	    break;
 	case 'z':
@@ -47,6 +50,7 @@ class Piece {
 			      { 0, 0, 5, 0 },
 			      { 0, 0, 0, 0 } } };
 	    data = z;
+	    rot = 1;
 	    max_rot = 2;
 	    break;
 	case 'l':
@@ -67,6 +71,7 @@ class Piece {
 			      { 0, 0, 7, 0 },
 			      { 0, 0, 0, 0 } } };
 	    data = l;
+	    rot = 3;
 	    max_rot = 4;
 	    break;
 	case 'j':
@@ -87,6 +92,7 @@ class Piece {
 			      { 0, 6, 6, 0 },
 			      { 0, 0, 0, 0 } } };
 	    data = j;
+	    rot = 3;
 	    max_rot = 4;
 	    break;
 	case 't':
@@ -107,6 +113,7 @@ class Piece {
 			      { 0, 0, 3, 0 },
 			      { 0, 0, 0, 0 } } };
 	    data = t;
+	    rot = 3;
 	    max_rot = 4;
 	    break;
 	}

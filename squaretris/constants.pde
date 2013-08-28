@@ -9,10 +9,17 @@ final int SPACING = 50;
 final int GRID_W = 10;
 final int GRID_H = 22; // only displaying 20!
 
+// for some reason, enums don't work in processing? D:
+final int STATE_MAIN_MENU = 0;
+final int STATE_GAME = 1;
+final int STATE_GAME_OVER = 2;
+
 // compound constants (magic)
 final int GRID_SIZE = (SCREEN_H - SPACING*2)/GRID_H;
 final float P1_PANEL_X = (2*SPACING) + GRID_SIZE*GRID_W;
 final float P1_PANEL_Y = SCREEN_H*((float) 2/3);
+final float P1_NEXT_PANEL_X = P1_PANEL_X;
+final float P1_NEXT_PANEL_Y = SCREEN_H*((float) 1/3);
 
 // colors
 color CYAN = color(200,255,255);
