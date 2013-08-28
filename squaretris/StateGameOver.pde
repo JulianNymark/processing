@@ -1,10 +1,5 @@
 PGraphics score_summary;
 
-// Hunt for the magic bug #1:
-// why does the normal variable p1.score randomly change
-// after the game ends? :D who knows...?
-// great honor will be bestowed on the finder
-
 void initGameOver(){
     
 }
@@ -15,12 +10,12 @@ void drawGameOver(){
 	init_state = false;
     }
 
-    // print random junk
-    for (int x=0; x<GRID_W; ++x){
-	for (int y=0; y<GRID_H; ++y){
-	    game_grid.grid[x][y] = (int) random(9);
-	}
-    }
+    // DEBUG print random junk
+    // for (int x=0; x<GRID_W; ++x){
+    // 	for (int y=0; y<GRID_H; ++y){
+    // 	    game_grid.grid[x][y] = (int) random(9);
+    // 	}
+    // }
 	
     // print game over
     textAlign(CENTER);

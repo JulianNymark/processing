@@ -664,10 +664,6 @@ public void inputGame(){
 }
 PGraphics score_summary;
 
-// Quiz:
-// why does the normal variable p1.score randomly change
-// after game ends? :D who knows...?
-
 public void initGameOver(){
     
 }
@@ -678,12 +674,12 @@ public void drawGameOver(){
 	init_state = false;
     }
 
-    // print random junk
-    for (int x=0; x<GRID_W; ++x){
-	for (int y=0; y<GRID_H; ++y){
-	    game_grid.grid[x][y] = (int) random(9);
-	}
-    }
+    // DEBUG print random junk
+    // for (int x=0; x<GRID_W; ++x){
+    // 	for (int y=0; y<GRID_H; ++y){
+    // 	    game_grid.grid[x][y] = (int) random(9);
+    // 	}
+    // }
 	
     // print game over
     textAlign(CENTER);
