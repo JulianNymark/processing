@@ -164,6 +164,7 @@ public void gameOver(){
     setGameState(STATE_GAME_OVER);
     
     // TODO submit highscore??
+    System.out.printf("%d 0%n", p1.score*p1.level);
 }
 
 public boolean checkCollision(){
