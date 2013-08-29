@@ -976,13 +976,13 @@ int ORANGE = color(255,210,150);
 final char[] possible_pieces = {'o','i','s','z','l','j','t'};
 public void keyPressed(){
     switch (game_state) {
-    case 0: // MAIN_MENU
+    case STATE_MAIN_MENU:
 	inputMainMenu();
 	break;
-    case 1: // GAME
+    case STATE_GAME:
 	inputGame();
 	break;
-    case 2: // GAME_OVER
+    case STATE_GAME_OVER:
 	inputGameOver();
 	break;
     }
