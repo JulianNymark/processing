@@ -6,8 +6,8 @@ final int SCREEN_H = 600;
 final int SPACING = 50;
 
 // atomic constants (important & affect gameplay)
-final int GRID_W = 10;
-final int GRID_H = 22; // only displaying 20!
+final int GRID_W = 10; // game grid block count (width)
+final int GRID_H = 22; // game grid block count (height) top 2 rows not drawn!
 
 // for some reason, enums don't work in processing? D:
 final int STATE_MAIN_MENU = 0;

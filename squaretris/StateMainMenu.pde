@@ -79,39 +79,34 @@ void drawMainMenu(){
 }
 
 void inputMainMenu(){
-    // arrow keys (CODED)
     if (key == CODED) {
-	// player 2 arrows
+	// arrow keys are coded keys (CODED)
 	switch (keyCode) {
-	case UP:
+	case P2_UP:
 	    break;
-	case DOWN:
+	case P2_DOWN:
 	    break;
-	case LEFT:
+	case P2_LEFT:
 	    break;
-	case RIGHT:
+	case P2_RIGHT:
 	    break;
 	}
     }
 
     switch (key) {
-	// start & select
-    case ' ':
-	// start
+    case START_BUTTON:
 	break;
     case ENTER:
-    case RETURN:
-	// select
+    case SELECT_BUTTON:
 	break;
-	// player 1 buttons
-    case 'r':
-    case 't':
-    case 'f':
-    case 'g':
+    case P1_ROTATE_LEFT:
+    case P1_ROTATE_RIGHT:
+    case P1_DROP:
+    case P1_EXTRA_BUTTON:
 	switch(menu_selection){
 	case 0:
 	    // start the game!
-	    thread("update"); // start the physics / update thread
+	    thread("update"); // start the physics & update thread
 	    setGameState(STATE_GAME);
 	    break;
 	case 1:
@@ -119,31 +114,29 @@ void inputMainMenu(){
 	    break;
 	}
 	break;
-	// player 1 arrows
-    case 'w': // up
+    case P1_UP:
 	menu_selection += 1;
 	if(menu_selection > menu_selections-1){
 	    menu_selection = 0;
 	}
 	break;
-    case 's': // down
+    case P1_DOWN:
 	menu_selection -= 1;
 	if(menu_selection < 0){
 	    menu_selection = menu_selections-1;
 	}
 	break;
-    case 'a': // left
+    case P1_LEFT:
 	break;
-    case 'd': // right
+    case P1_RIGHT:
 	break;
-	// player 2 buttons
-    case 'o':
+    case P2_ROTATE_LEFT:
 	break;
-    case 'p':
+    case P2_ROTATE_RIGHT:
 	break;
-    case 'k':
+    case P2_DROP:
 	break;
-    case 'l':
+    case P2_EXTRA_BUTTON:
 	break;
     }
 }

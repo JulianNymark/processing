@@ -30,62 +30,57 @@ void drawGame(){
 
 void inputGame(){
     if (key == CODED) {
-	// player 2 arrows
+	// arrow keys are CODED
 	switch (keyCode) {
-	case UP:
+	case P2_UP:
 	    break;
-	case DOWN:
+	case P2_DOWN:
 	    break;
-	case LEFT:
+	case P2_LEFT:
 	    break;
-	case RIGHT:
+	case P2_RIGHT:
 	    break;
 	}
     }
+
     switch (key) {
-	// start & select
-    case ' ':
-	// start
+    case START_BUTTON:
 	break;
     case ENTER:
-    case RETURN:
-	// select
+    case SELECT_BUTTON:
 	break;
-	// player 1 buttons
-    case 'r':
+    case P1_ROTATE_LEFT:
 	rotatePiece('l');
 	break;
-    case 't':
+    case P1_ROTATE_RIGHT:
 	rotatePiece('r');
 	break;
-    case 'f':
+    case P1_DROP:
 	dropPiece();
 	break;
-    case 'g':
-	// p1.level += 1; DEBUG
+    case P1_EXTRA_BUTTON:
+	// p1.level += 1; // DEBUG
 	break;
-	// player 1 arrows
-    case 'w': // up
-	// movePiece('u'); DEBUG
+    case P1_UP:
+	// movePiece('u'); // DEBUG
 	dropPiece();
 	break;
-    case 's': // down
+    case P1_DOWN:
 	movePiece('d');
 	break;
-    case 'a': // left
+    case P1_LEFT:
 	movePiece('l');
 	break;
-    case 'd': // right
+    case P1_RIGHT:
 	movePiece('r');
 	break;
-	// player 2 buttons
-    case 'o':
+    case P2_ROTATE_LEFT:
 	break;
-    case 'p':
+    case P2_ROTATE_RIGHT:
 	break;
-    case 'k':
+    case P2_DROP:
 	break;
-    case 'l':
+    case P2_EXTRA_BUTTON:
 	break;
     }
 }
