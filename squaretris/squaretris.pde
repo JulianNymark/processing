@@ -96,7 +96,7 @@ void rotatePiece(char dir){
     removePiece();
     
     switch (dir) {
-    case 'l': // counter_clockwise
+    case 'r': // clockwise
 	p1.cur.rot = (p1.cur.rot + 1) % p1.cur.max_rot;
 	if (checkCollision()) {
 	    if (p1.cur.rot == 0){
@@ -107,7 +107,7 @@ void rotatePiece(char dir){
 	    }
 	}
 	break;
-    case 'r': // clockwise
+    case 'l': // counter_clockwise
 	if (p1.cur.rot == 0){
 	    p1.cur.rot = p1.cur.max_rot - 1;
 	}
