@@ -50,10 +50,10 @@ void inputGame(){
     case SELECT_BUTTON:
 	break;
     case P1_ROTATE_LEFT:
-	rotatePiece('r');
+	rotatePiece('l');
 	break;
     case P1_ROTATE_RIGHT:
-	rotatePiece('l');
+	rotatePiece('r');
 	break;
     case P1_DROP:
 	dropPiece();
