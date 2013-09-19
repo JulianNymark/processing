@@ -10,3 +10,6 @@ tramp
 # Org-mode
 .org-id-locations
 *_archive
+
+# ignore output-java folders
+output-java/

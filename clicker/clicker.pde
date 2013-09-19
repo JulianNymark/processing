@@ -19,8 +19,12 @@ void setup(){
 
 void draw(){
     background(0);
-    
     fill(255);
+
+    // draw fps counter
+    textAlign(LEFT, TOP);
+    textSize(20);
+    text("FPS: " + frameRate, 0,0);
     
     // draw current_amount
     textAlign(CENTER, CENTER);
@@ -28,11 +32,6 @@ void draw(){
     text("" + current_amount, width/2, height/2);
     textSize(30);
     text("( " + String.format("%.1f", ticks_per_second) + " )", width/2, (height/2) + 75);
-
-    // draw fps counter
-    textAlign(LEFT, TOP);
-    textSize(20);
-    text("FPS: " + frameRate, 0,0);
 
     // draw & update fancy click
     update_fc_list();
