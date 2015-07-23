@@ -1,3 +1,19 @@
+import processing.core.*; 
+import processing.data.*; 
+import processing.event.*; 
+import processing.opengl.*; 
+
+import java.util.HashMap; 
+import java.util.ArrayList; 
+import java.io.File; 
+import java.io.BufferedReader; 
+import java.io.PrintWriter; 
+import java.io.InputStream; 
+import java.io.OutputStream; 
+import java.io.IOException; 
+
+public class clicker extends PApplet {
+
 double ticks_per_second;
 double per_click;
 double buffer;
@@ -6,7 +22,7 @@ float dt;
 
 long current_amount;
 
-void setup(){
+public void setup(){
     size(800, 600);
     
     // initialzing values
@@ -21,7 +37,7 @@ void setup(){
     dt = 0;
 }
 
-void draw(){
+public void draw(){
     dt = 1/frameRate;
     background(0);
     
@@ -37,19 +53,19 @@ void draw(){
     // draw fps counter
     textAlign(LEFT, TOP);
     textSize(20);
-    text("FPS: " + String.format("%2d", int(frameRate)), 0,0);
+    text("FPS: " + String.format("%2d", PApplet.parseInt(frameRate)), 0,0);
 
     // draw & update fancy click
     update_fc_list();
     draw_fc_list();
 
     //debug fancy list length
-    //println("fancy_click (size): ", fc_list.size());
+    println("fancy_click (size): ", fc_list.size());
 }
 
-void mousePressed(){
+public void mousePressed(){
     if (mouseButton == RIGHT){
-	ticks_per_second += 0.1;
+	ticks_per_second += 0.1f;
     }
     else {
 	current_amount += per_click;
@@ -57,7 +73,7 @@ void mousePressed(){
     }
 }
 
-void ticker_update(){
+public void ticker_update(){
     while(true){
 	float time_per_frame = dt;
 	double tick_per_frame = time_per_frame * ticks_per_second;
@@ -92,7 +108,7 @@ class FancyClick{
 
 ArrayList<FancyClick> fc_list;
 
-void draw_fc_list(){
+public void draw_fc_list(){
     textAlign(CENTER, CENTER);
     textSize(20);
     for (FancyClick fc : fc_list){
@@ -101,7 +117,7 @@ void draw_fc_list(){
     }
 }
 
-void update_fc_list(){
+public void update_fc_list(){
     for (int i = 0; i < fc_list.size(); ++i) {
 	FancyClick fc = fc_list.get(i);
 	fc.alpha -= 255*(dt)/2;
@@ -111,7 +127,16 @@ void update_fc_list(){
     }
 }
 
-void add_fc_list(double val){
+public void add_fc_list(double val){
     FancyClick fc = new FancyClick(val, mouseX, mouseY);
     fc_list.add(fc);
+}
+  static public void main(String[] passedArgs) {
+    String[] appletArgs = new String[] { "clicker" };
+    if (passedArgs != null) {
+      PApplet.main(concat(appletArgs, passedArgs));
+    } else {
+      PApplet.main(appletArgs);
+    }
+  }
 }
